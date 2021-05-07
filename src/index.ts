@@ -2,20 +2,15 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {createExpressServer} from 'routing-controllers'
 import {EventController} from './controller/EventControllers'
-import {UserController} from './controller/UserController'
 
-createConnection().then(async connection => {
+createConnection().then(async () => {
 
     // create express app
     const app = createExpressServer({
         controllers: [
             EventController,
-            UserController
         ]
     })
-
-    // setup express app here
-    // ...
 
     // start express server
     app.listen(3000);

@@ -3,7 +3,20 @@ import {NextFunction, Request, Response} from "express";
 import {Event} from "../entity/Event";
 import {User} from "../entity/User"
 import {JsonController, Get, Param, NotFoundError, InternalServerError, Post, BodyParam, Body} from 'routing-controllers'
-import {eventNames} from "process";
+import {OperationCanceledException} from "typescript";
+import {IsNotEmpty, isNotEmpty, IsString, isString, MaxLength} from "class-validator";
+
+class CreateEventPram {
+    @IsString()
+    @IsNotEmpty()
+    @MaxLength(128)
+    eventName: string
+
+    @IsString()
+    @IsNotEmpty()
+    @MaxLength(128)
+    member: string
+}
 
 @JsonController() // リクエストとレスポンスがjson形式であることを保証する
 export class EventController {
@@ -64,32 +77,39 @@ export class EventController {
     // POST
     @Post('/api/event')
     async createEvent (
-        @BodyParam("eventName") eventName: string,
-        @BodyParam("member") member: string
+        @Body() bodyParam: CreateEventPram,
     ) {
 
-        console.log(`${eventName},${member}`)
+        console.log(`${bodyParam.eventName},${bodyParam.member}`)
 
         const eventRepository = getRepository(Event)
 
         // 認証
 
-        let event = new Event(eventName, 1)
-        let users = new User(member, event)
+        let event = new Event(bodyParam.eventName, 1)
+        let users = new User(bodyParam.member, event)
+
+        let eventCreateRsult: Event | null
+        let userCreateRsult: User | null
 
         // データ作成
         try {
             await getManager().transaction(async transactionalEntityManager => {
-                transactionalEntityManager.save(event)
-                transactionalEntityManager.save(users)
+                eventCreateRsult = await transactionalEntityManager.save(event)
+                userCreateRsult = await transactionalEntityManager.save(users)
             })
 
-            return {
-                status: 'Success',
-                result: {
-                    eventName: eventName,
-                    member: member
+            if (eventCreateRsult != null && userCreateRsult != null) {
+
+                return {
+                    status: 'Success',
+                    result: {
+                        eventName: bodyParam.eventName,
+                        member: bodyParam.member
+                    }
                 }
+            } else {
+                throw new OperationCanceledException()
             }
 
         } catch (err) {

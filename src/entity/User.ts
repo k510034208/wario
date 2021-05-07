@@ -1,4 +1,3 @@
-import {eventNames} from "process";
 import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany, JoinColumn} from "typeorm";
 import {Event} from "./Event"
 
@@ -14,7 +13,7 @@ export class User {
     @ManyToOne(type => Event, event => event.users)
     event: Event
 
-    constructor (userName: string, event: Event) {
+    constructor (userName: string, event?: Event) {
         this.userName = userName
         this.event = event
     }
