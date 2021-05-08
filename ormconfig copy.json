@@ -1,10 +1,10 @@
 {
    "type": "mysql",
-   "host": "us-cdbr-east-03.cleardb.com",
+   "host": "localhost",
    "port": 3306,
-   "username": "b175c8cdd0934b",
-   "password": "e95b20cc",
-   "database": "heroku_51d16e954d2c59b",
+   "username": "root",
+   "password": "root",
+   "database": "wario",
    "synchronize": true,
    "logging": true,
    "entities": [
