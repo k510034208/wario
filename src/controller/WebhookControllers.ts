@@ -24,7 +24,9 @@ const textEventHandller = async (event: WebhookEvent): Promise<MessageAPIRespons
     const {replyToken} = event
     const {text} = event.message
 
-    if (!text.startsWith('wario¥n')) {
+    console.log(text)
+
+    if (!text.startsWith('wario')) {
         return
     }
 
