@@ -8,6 +8,9 @@ export class User {
     id: number;
 
     @Column()
+    userId: string
+
+    @Column()
     userName: string;
 
     @ManyToOne(type => Event, event => event.users)
