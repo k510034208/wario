@@ -2,7 +2,7 @@ import {getRepository, getManager} from "typeorm";
 import {NextFunction, Request, Response} from "express";
 import {Event} from "../entity/Event";
 import {User} from "../entity/User"
-import {HttpError, JsonController, Get, Param, NotFoundError, InternalServerError, Post, BodyParam, Body} from 'routing-controllers'
+import {HttpError, JsonController, Get, Param, NotFoundError, InternalServerError, Post, BodyParam, Body, Header} from 'routing-controllers'
 import {OperationCanceledException} from "typescript";
 import {IsNotEmpty, isNotEmpty, IsString, isString, MaxLength} from "class-validator";
 
@@ -20,16 +20,20 @@ export class WebhookController {
     }
 
     // メッセージ取得用ルーティング
-    @Post('/webhock/')
+    @Post('/webhook/')
+    @Header('Authorization', 'Bearer xuY+Bdfl62TcU0Bvtoi/FMMrQaZLzIjIFDPs4K0WXeK/fcnpTvYTr59No0MRxaI3WQWMrRtRtx5SUScEMP6l6/XQQjUGV6SnsXJ6/6OgJq9PPaGfnZS7uTTKN6Yi0eU3Cr6BIHI4EdDi/IYgvw1pEgdB04t89/1O/w1cDnyilFU=')
     async postMessage (
-        @Body() body
+        @Body() body: any
     ) {
 
-        console.log(body)
+        let replyToken = body.event.replyToken
 
         return {
-            status: 'success',
-            message: 'test ok'
+            replyToken: replyToken,
+            messages: [{
+                type: 'text',
+                text: 'hello!!'
+            }]
         }
     }
 
