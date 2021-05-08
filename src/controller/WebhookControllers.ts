@@ -9,9 +9,8 @@ import {IsNotEmpty, isNotEmpty, IsString, isString, MaxLength} from "class-valid
 @JsonController() // リクエストとレスポンスがjson形式であることを保証する
 export class WebhookController {
 
-    // イベント情報取得のAPI
+    // 疎通確認用ルーティング
     @Get('/webhook/')
-
     async getConnection () {
 
         return {
@@ -19,6 +18,22 @@ export class WebhookController {
             message: 'Connected successfully!!'
         }
     }
+
+    // メッセージ取得用ルーティング
+    @Post('/webhock/')
+    async postMessage (
+        @Body() body
+    ) {
+
+        console.log(body)
+
+        return {
+            status: 'success',
+            message: 'test ok'
+        }
+    }
+
+
 
 }
 
