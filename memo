@@ -236,3 +236,7 @@ export class EventController {
         }
     }
 }
+
+・HEROKU
+mysql接続先を変更する
+

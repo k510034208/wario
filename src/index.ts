@@ -2,6 +2,7 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {createExpressServer} from 'routing-controllers'
 import {EventController} from './controller/EventControllers'
+import {WebhookController} from './controller/WebhookControllers'
 
 createConnection().then(async () => {
 
@@ -9,6 +10,7 @@ createConnection().then(async () => {
     const app = createExpressServer({
         controllers: [
             EventController,
+            WebhookController
         ]
     })
 
