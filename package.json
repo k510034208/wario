@@ -11,7 +11,9 @@
       "eslint": "^7.25.0",
       "eslint-config-prettier": "^8.3.0",
       "eslint-plugin-prettier": "^3.4.0",
-      "prettier": "^2.2.1"
+      "npm-run-all": "^4.1.5",
+      "prettier": "^2.2.1",
+      "rimraf": "^3.0.2"
    },
    "dependencies": {
       "body-parser": "^1.18.1",
@@ -32,6 +34,7 @@
       "dev:w": "ts-node-dev --respawn ./src/index.ts",
       "build": "tsc",
       "start": "node .",
-      "lint": "eslint --ext .js,.ts --ignore-path .gitignore ."
+      "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
+      "clean": "rimraf build/*"
    }
 }
