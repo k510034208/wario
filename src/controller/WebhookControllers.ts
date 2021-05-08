@@ -15,12 +15,18 @@ const client = new Client({
 })
 
 const textEventHandller = async (event: WebhookEvent): Promise<MessageAPIResponseBase | undefined> => {
+
+    // テキストのメッセージかつ、`wario¥n`で開始されるメッセージにのみ反応する
     if (event.type !== 'message' || event.message.type !== 'text') {
         return
     }
 
     const {replyToken} = event
     const {text} = event.message
+
+    if (!text.startsWith('wario¥n')) {
+        return
+    }
 
     const response: TextMessage = {
         type: 'text',
